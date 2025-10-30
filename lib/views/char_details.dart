@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ordinary/utilities/widgets/app_bar.dart';
 import 'package:ordinary/utilities/widgets/bottombar.dart';
 import 'package:ordinary/views/episode_detail_screen.dart';
 import 'package:provider/provider.dart';
@@ -33,10 +34,7 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen> {
     final store = Provider.of<CharacterStore>(context);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Character Details"),
-        backgroundColor: AppColors.primary,
-      ),
+     appBar: CustomAppBar(),
       body: Observer(
         builder: (_) {
           if (store.isLoading) {
@@ -90,8 +88,7 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen> {
                 ),
                 const SizedBox(height: 20),
 
-                //seper
-                // Episodes List
+
                 Column(
                   children: episodes.map((ep) {
                     return Card(
@@ -116,6 +113,7 @@ class _CharacterDetailScreenState extends State<CharacterDetailScreen> {
           );
         },
       ),
+      bottomNavigationBar: BottomBar(currentIndex: 0),
     );
   }
 }

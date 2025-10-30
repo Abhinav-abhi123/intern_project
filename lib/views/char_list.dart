@@ -1,6 +1,7 @@
-// lib/views/viewmore_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:ordinary/utilities/widgets/app_bar.dart';
+import 'package:ordinary/utilities/widgets/bottombar.dart';
 import 'package:provider/provider.dart';
 import 'package:ordinary/service/state_management/GetList/char_store.dart';
 import 'package:ordinary/utilities/app_color.dart';
@@ -21,8 +22,6 @@ class _ViewmorePageState extends State<ViewmorePage> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
-
     if (!_initialized) {
       store = Provider.of<CharacterList>(context, listen: false);
       store.refreshCharacters();
@@ -39,15 +38,13 @@ class _ViewmorePageState extends State<ViewmorePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('All Characters'),
-        backgroundColor: AppColors.primary,
-      ),
+      appBar: CustomAppBar(),
       body: Observer(
         builder: (_) {
           if (store.isLoading && store.characters.isEmpty) {
             return const Center(child: CircularProgressIndicator());
           }
+
           if (store.characters.isEmpty) {
             return const Center(child: Text('No Characters Found'));
           }
@@ -63,7 +60,7 @@ class _ViewmorePageState extends State<ViewmorePage> {
                     padding: EdgeInsets.zero,
                     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      mainAxisExtent: 250,
+                      mainAxisExtent: 280,
                       crossAxisSpacing: 20,
                       mainAxisSpacing: 40,
                     ),
@@ -73,14 +70,7 @@ class _ViewmorePageState extends State<ViewmorePage> {
                       return Container(
                         decoration: BoxDecoration(
                           color: AppColors.purewhite,
-                          borderRadius: BorderRadius.circular(20),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.black12,
-                              blurRadius: 2,
-                              offset: Offset(2, 4),
-                            ),
-                          ],
+                          borderRadius: BorderRadius.circular(8),
                         ),
                         child: CharCard(character: character),
                       );
@@ -91,12 +81,12 @@ class _ViewmorePageState extends State<ViewmorePage> {
                     ElevatedButton(
                       onPressed: store.isLoading ? null : store.fetchCharacters,
                       child: store.isLoading
-                          ?  SizedBox(
+                          ? SizedBox(
                         height: 18,
                         width: 18,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          color:AppColors.fadedcolor ,
+                          color: AppColors.fadedcolor,
                         ),
                       )
                           : const Text('View More'),
@@ -112,6 +102,7 @@ class _ViewmorePageState extends State<ViewmorePage> {
           );
         },
       ),
+      bottomNavigationBar: BottomBar(currentIndex: 0),
     );
   }
 }

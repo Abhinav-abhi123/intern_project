@@ -11,6 +11,7 @@ import '../views/char_details.dart';
 import '../views/choose_page.dart';
 import '../views/episode_detail_screen.dart';
 import '../views/home_screen.dart';
+import '../views/search_page.dart';
 import '../views/splash_screen.dart';
 import '../views/char_list.dart';
 
@@ -33,10 +34,9 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const HomeScreen(),
       routes: [
         GoRoute(
-          path: CharacterDetailScreen.route, // dynamic parameter
-          name: CharacterDetailScreen.route, // dynamic parameter
+          path: CharacterDetailScreen.route,
+          name: CharacterDetailScreen.route,
           builder: (context, state) {
-            // final characterId = state.pathParameters['id']!;
             final id = state.uri.queryParameters['id']!;
             return CharacterDetailScreen(characterId: id);
           },
@@ -52,8 +52,11 @@ final GoRouter appRouter = GoRouter(
         GoRoute(
           path: ViewmorePage.route,
           name: ViewmorePage.route,
-          builder: (context, state) => const ViewmorePage(),
+          builder: (context, state) {
+            return ViewmorePage();
+          },
         ),
+
         GoRoute(
           path: AddPlayers.route,
           name: AddPlayers.route,
@@ -72,6 +75,12 @@ final GoRouter appRouter = GoRouter(
           path: Profile.route,
           name: Profile.route,
           builder: (context, state) => const Profile(),
+
+        ),
+        GoRoute(
+          path: SearchPage.route,
+          name: SearchPage.route,
+          builder: (context, state) => const SearchPage(),
 
         ),
 

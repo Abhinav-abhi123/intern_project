@@ -52,7 +52,7 @@ class CharCard extends StatelessWidget {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
-              const SizedBox(height: 4),
+              const SizedBox(height: 14),
               Text(
                 'Gender: ${character.gender ?? ''}',
                 style: AppStyles.getRegularTextStyle(

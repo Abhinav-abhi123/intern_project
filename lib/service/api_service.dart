@@ -4,8 +4,8 @@ class ApiService {
   static Map<String, String> header = {'Content-Type': 'application/json'};
 
   static String getCharacters = r'''
-    query GetCharacters($page: Int) {
-      characters(page: $page) {
+    query GetCharacters($page: Int, $name: String) {
+      characters(page: $page, filter: { name: $name }) {
         info {
           count
           next
@@ -23,6 +23,7 @@ class ApiService {
       }
     }
   ''';
+
   static String getCharacterById = """
     query GetCharacterById(\$id: ID!) {
       character(id: \$id) {
@@ -35,11 +36,11 @@ class ApiService {
         origin {
           name
         }
-         episode{
+        episode {
           name
           id
           air_date
-          characters{
+          characters {
             id
             name
             status
