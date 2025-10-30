@@ -3,6 +3,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:ordinary/service/state_management/counter/counter.dart';
 import 'package:ordinary/utilities/app_color.dart';
 import 'package:ordinary/utilities/app_style.dart';
+import 'package:ordinary/utilities/widgets/app_bar.dart';
+import 'package:ordinary/utilities/widgets/bottombar.dart';
 import 'package:provider/provider.dart';
 import '../model/CharacterDetailScreen.dart';
 import '../utilities/widgets/episod_card.dart';
@@ -18,10 +20,7 @@ class EpisodeDetailScreen extends StatelessWidget {
     final characters = episode.characters ?? [];
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(episode.name ?? "Episode Details"),
-        backgroundColor: AppColors.primary,
-      ),
+    appBar: CustomAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -59,10 +58,16 @@ class EpisodeDetailScreen extends StatelessWidget {
                   children:
                       characters.map((character) {
                         SizedBox(height: 20,);
-                        return CharacterCard(
-                          imageUrl: character.image,
-                          name: character.name,
-                          gender: character.status,
+                        return Column(
+                          children: [
+
+                            CharacterCard(
+                              imageUrl: character.image,
+                              name: character.name,
+                              gender: character.status,
+                            ),
+                            SizedBox(height: 20,)
+                          ],
                         );
 
                       }).toList(),
@@ -71,6 +76,7 @@ class EpisodeDetailScreen extends StatelessWidget {
           ),
         ),
       ),
+      bottomNavigationBar: BottomBar(currentIndex: 0),
     );
   }
 }
